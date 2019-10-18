@@ -1,0 +1,37 @@
+@import '@/../node_modules/milligram/src/_Form.sass'
+
+// Form
+// ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+input[type='url'],
+textarea,
+select
+	height: 4.8rem
+	font-family: 'Roboto', 'Noto Kufi Arabic', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif
+	font-size: 1.6rem
+	font-weight: 400
+	color: #fff
+	background-color: rgba(63, 63, 63, 0.4)
+	cursor: pointer
+
+select
+	height: 4.8rem
+  padding: 0 2.4rem
+  box-sizing: border-box
+	padding-inline-end: 3.0rem
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" fill="#c0c0c0"/><path d="M0 0h24v24H0z" fill="none"/></svg>')
+	background-position: 100% center
+	background-repeat: no-repeat
+
+*[dir='rtl'] select
+	background-position: 0 center
+
+textarea
+	height: 42.0rem
+  resize: vertical
