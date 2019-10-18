@@ -3,7 +3,7 @@
   .content
     .level Beginner
     .title {{ name }}
-    .description(:alt="description") {{ description }}
+    .description(:alt="description") {{ description.replace(/\\n/g, ' ') }}
   .footer
     //- TODO: remove placeholder
     .text 10 Students are working on this
@@ -79,7 +79,7 @@ export default {
         border-color: #868e96
         box-shadow: 0 1px 2px rgba(#000000, .2)
   &.solved
-    background-color: rgba(#51cf66, .08)
+    background-color: rgba(#00E676, .08)
     .button
       color: #8ce99a
       pointer-events: none

@@ -1,20 +1,29 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Toastify from 'toastify-js'
+import 'toastify-js/src/toastify.css'
 import api from '@/api'
 
 Vue.use(Vuex)
 
-const createToast = (text, type) =>
-  Toastify({
-    text,
+let connectionLostToastState = false
+const connectionLostToast = (() => {
+  const toast = Toastify({
+    text: 'Connection lost!',
     duration: 3000,
     newWindow: true,
     close: true,
-    className: type
+    className: 'error'
   })
-
-const connectionLostToast = createToast('Connection lost!', 'error')
+  const showToast = () => {
+    if (!connectionLostToastState) {
+      connectionLostToastState = true
+      toast.showToast()
+      setTimeout(() => { connectionLostToastState = false }, 1500)
+    }
+  }
+  return { showToast }
+})()
 
 export default new Vuex.Store({
   state: {
@@ -30,6 +39,7 @@ export default new Vuex.Store({
     CHALLENGES_FAILURE: () => {
       connectionLostToast.showToast()
     },
+
     USER_REQUEST: () => {},
     USER_SUCCESS: (state, payload) => {
       state.user = payload
@@ -37,6 +47,7 @@ export default new Vuex.Store({
     USER_FAILURE: () => {
       connectionLostToast.showToast()
     },
+
     CHALLENGE_REQUEST: () => {},
     CHALLENGE_SUCCESS: (state, payload) => {
       const i = state.challenges.findIndex(
@@ -52,6 +63,7 @@ export default new Vuex.Store({
     CHALLENGE_FAILURE: () => {
       connectionLostToast.showToast()
     },
+
     CHANGE_VISIBILITY_REQUEST: () => {},
     CHANGE_VISIBILITY_SUCCESS: (state, payload) => {
       const i = state.challenges.findIndex(
@@ -68,6 +80,7 @@ export default new Vuex.Store({
     CHANGE_VISIBILITY_FAILURE: () => {
       connectionLostToast.showToast()
     },
+
     CHANGE_VISIBILITY_FOR_ALL_REQUEST: () => {},
     CHANGE_VISIBILITY_FOR_ALL_SUCCESS: (state, visibility) => {
       state.challenges = state.challenges.map(challenge => ({
@@ -78,6 +91,7 @@ export default new Vuex.Store({
     CHANGE_VISIBILITY_FOR_ALL_FAILURE: () => {
       connectionLostToast.showToast()
     },
+
     DELETE_CHALLENGE_REQUEST: () => {},
     DELETE_CHALLENGE_SUCCESS: (state, id) => {
       const i = state.challenges.findIndex(challenge => challenge.id === id)
@@ -94,30 +108,31 @@ export default new Vuex.Store({
   actions: {
     fetchChallenges: context => {
       context.commit('CHALLENGES_REQUEST')
-      api
-        .getChallenges()
-        .then(res => context.commit('CHALLENGES_SUCCESS', res.data))
-        .catch(err => context.commit('CHALLENGES_FAILURE', err))
+      api.getChallenges().then(res => {
+        context.commit('CHALLENGES_SUCCESS', res.data)
+      }).catch(err => {
+        context.commit('CHALLENGES_FAILURE', err)
+      })
     },
     fetchChallenge: (context, id) => {
       context.commit('CHALLENGE_REQUEST')
-      api
-        .getChallenge(id)
-        .then(res => context.commit('CHALLENGE_SUCCESS', res.data))
-        .catch(err => context.commit('CHALLENGE_FAILURE', err))
+      api.getChallenge(id).then(res => {
+        context.commit('CHALLENGE_SUCCESS', res.data)
+      }).catch(err => {
+        context.commit('CHALLENGE_FAILURE', err)
+      })
     },
-    fetchUser: context => {
+    fetchUser: async context => {
       context.commit('USER_REQUEST')
-      return api
-        .getUser()
-        .then(res => {
-          context.commit('USER_SUCCESS', res.data)
-          return res.data
-        })
-        .catch(err => {
-          context.commit('USER_FAILURE', err)
-          return {}
-        })
+      try {
+        const res = await api.getUser()
+        context.commit('USER_SUCCESS', res.data)
+        return res.data
+      } catch {
+        context.commit('USER_FAILURE')
+      }
+      console.log('test')
+      return {}
     },
     changeVisibility: (context, id) => {
       context.commit('CHANGE_VISIBILITY_REQUEST', id)
@@ -125,16 +140,15 @@ export default new Vuex.Store({
         challenge => challenge.id === id
       )
       const challenge = context.getters.challenges[i]
-      return api
-        .changeVisibility(id, challenge.type === 3 ? 1 : 3)
-        .then(res => {
-          context.commit('CHANGE_VISIBILITY_SUCCESS', id)
-          return res.data
-        })
-        .catch(() => {
-          context.commit('CHANGE_VISIBILITY_FAILURE')
-          return {}
-        })
+      const newVisibility = challenge.type === 3 ? 1 : 3
+      try {
+        const res = api.changeVisibility(id, newVisibility)
+        context.commit('CHANGE_VISIBILITY_SUCCESS', id)
+        return res.data
+      } catch {
+        context.commit('CHANGE_VISIBILITY_FAILURE')
+      }
+      return {}
     },
     changeVisibilityForAll: (context, visibility) => {
       context.commit('CHANGE_VISIBILITY_FOR_ALL_REQUEST')

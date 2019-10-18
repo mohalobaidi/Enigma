@@ -77,12 +77,10 @@ export default {
   user-select: none
   transition: height .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out
   height: 7.2rem
-  background-color: $color-background
-  box-shadow: 0 0 .4rem rgba(0, 0, 0, 0)
+  background-color: rgba(darken($color-background, 0%), .95)
+  box-shadow: 0 .1rem .4rem $color-background
   &.collapsed
     height: 4.8rem
-    background-color: #101010
-    box-shadow: 0 .1rem .2rem rgba(0, 0, 0, .5)
   .container
     height: 100%
     display: flex

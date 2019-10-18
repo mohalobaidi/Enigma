@@ -13,8 +13,8 @@ if (process.argv[2] === 'dev') {
   // Logger middleware.
   app.use(logger('dev'))
 
-  // Login with id 1 - or a specified id.
-  global.USER = { id: +process.argv[3] || 1 }
+  const [,,, id, type] = process.argv[2]
+  global.USER = { id: +id || 1, type: type | 0 }
   console.log('[DEV] logged in with id ' + global.USER.id)
 }
 

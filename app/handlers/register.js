@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const crypto = require('crypto')
-const database = require('../database')
+const { getUserByUsername, registerUser } = require('../database')
 
 module.exports = (req, res, next) => {
   const schema = Joi.object().keys({
@@ -88,19 +88,24 @@ module.exports = (req, res, next) => {
     } else {
       const { name, email, phoneNumber, username, password, gender, token } = value
       const hashedPassword = crypto.createHash('sha256').update(password).digest('base64')
-      database.getUserByUsername(username).then(user => {
+      getUserByUsername(username).then(async user => {
         if (user.id) {
           res.redirect(303, '/register?type=error&message=Username is already taken')
         } else {
-          return database.registerUser({
-            name, email, phoneNumber, username, password: hashedPassword, gender: gender === 'male', token
-          }).then(result => {
-            if (result.rowCount === 0) {
-              res.redirect(303, '/register?type=error&message=Token is already used!')
-            } else {
-              res.redirect(303, '/register?type=success&message=You have been registered!')
-            }
+          const result = await registerUser({
+            name,
+            email,
+            phoneNumber,
+            username,
+            password: hashedPassword,
+            gender: gender === 'male',
+            token
           })
+          if (result.rowCount === 0) {
+            res.redirect(303, '/register?type=error&message=Token is already used!')
+          } else {
+            res.redirect(303, '/register?type=success&message=You have been registered!')
+          }
         }
       /* eslint-disable-next-line */
       }).catch(err => {

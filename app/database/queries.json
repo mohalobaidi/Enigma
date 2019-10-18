@@ -1,0 +1,20 @@
+{
+  "ADD_CHALLENGE": "INSERT INTO \"challenge\" (name, description, method_name, method_type, tests, parameters, points) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text, $7::int);",
+  "GET_CHALLENGE":  "SELECT * FROM \"challenge\" WHERE id=$1::int",
+  "GET_CHALLENGES": "SELECT id, name, description, points,  type, COALESCE(sum(CASE WHEN s.is_solved THEN 1 ELSE 0 END), 0) is_solved FROM \"challenge\" LEFT JOIN (SELECT is_solved, challenge_id FROM \"submission\" WHERE player_id=$1::int) AS s ON challenge.id = s.challenge_id WHERE type IN (SELECT type FROM \"user\" WHERE id=$1::int) OR 0 IN (SELECT type FROM \"user\" WHERE id=$1::int) GROUP BY id ORDER BY id;",
+  "CHANGE_CHALLENGE_TYPE": "UPDATE \"challenge\" SET type=$1::int WHERE id=$2::int;",
+  "CHANGE_CHALLENGES_TYPE":  "UPDATE \"challenge\" SET type=$1::int;",
+  "DELETE_CHALLENGE":  "DELETE FROM \"challenge\" WHERE id=$1::int;",
+  "ADD_USER": "INSERT INTO \"user\" (name, username, email, phone_number, password, gender) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::boolean);",
+  "GET_USER":  "SELECT * FROM \"user\" WHERE id=$1::int;",
+  "GET_USER_DATA": "SELECT *  FROM \"user\" u  JOIN (SELECT SUM(score) score, player_id, COUNT(is_solved) solved FROM \"submission\" where player_id=$1::int group by player_id) AS s ON u.id=s.player_id WHERE u.id=$1::int;",
+  "GET_USER_BY_USERNAME":  "SELECT * FROM \"user\" WHERE username=$1::text;",
+  "GET_USERS": "SELECT u.*, COALESCE(score, 0) score, COALESCE(solved, 0) solved FROM \"user\" u LEFT JOIN (SELECT SUM(score) score, player_id, COUNT(is_solved) solved FROM \"submission\" group by player_id) AS s ON u.id=s.player_id WHERE u.type<>0;",
+  "GET_USER_SUBMISSIONS": "SELECT COALESCE(SUM(score), 0)score FROM \"submission\" WHERE player_id=$1::int;",
+  "CHANGE_USER_TYPE":  "UPDATE \"user\" SET type=$2::int WHERE id=$1::int;",
+  "CHANGE_USERS_TYPE":  "UPDATE \"user\" SET type=$1::int WHERE type <> 0;",
+  "DELETE_USER":  "DELETE FROM \"user\" WHERE id=$1::int;",
+  "ADD_SUBMISSION": "INSERT INTO \"submission\" (player_id, challenge_id, code, language, is_solved, score) SELECT $1::int, $2::int, $3::text, $5::text, $6::boolean, CASE WHEN count(challenge_id) < 10 AND $6::boolean THEN 10-count(challenge_id) ELSE 0 END+$4::int*CASE WHEN $6::boolean THEN 2 ELSE 1 END from \"submission\" where challenge_id = $2::int AND is_solved;",
+  "UPDATE_SUBMISSION": "UPDATE \"submission\" SET code=$3::text, language=$5::text, is_solved=$6::boolean, score=(SELECT CASE WHEN count(challenge_id) < 10 AND $6::boolean THEN 10-count(challenge_id) ELSE 0 END+$4::INT*CASE WHEN $6::boolean THEN 2 ELSE 1 END from \"submission\" WHERE challenge_id = $2::int AND is_solved) WHERE player_id = $1::int AND challenge_id = $2::int;",
+  "GET_TOKENS":  "SELECT * FROM \"token\" ORDER BY user_id"
+}
