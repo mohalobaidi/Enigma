@@ -23,7 +23,7 @@ export default {
   computed: {
     ...mapGetters(['challenges', 'user']),
     inProgressChallenges () {
-      return challenges.slice(0, 3) || []
+      return this.challenges.slice(0, 3) || []
     },
     newChallenges () {
       return this.challenges.slice(3) || []
