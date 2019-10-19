@@ -2,19 +2,16 @@ const pg = require('pg')
 const queries = require('./queries.json')
 
 const pool = new pg.Pool({
-  database: 'enigma',
-  host: 'localhost',
-  password: 'hadi',
-  port: 5432,
-  user: 'admin'
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
 })
 
 pool.connect(err => {
   if (err) {
-    console.log('\x1B[0;31m' + "[pg] couldn't connect" + '\x1B[0m')
+    console.log('\x1B[0;31m' + "[PG] couldn't establish connection" + '\x1B[0m')
     console.error(err)
   } else {
-    console.log('\x1B[0;32m' + '[pg] connected' + '\x1B[0m')
+    console.log('\x1B[0;32m' + '[PG] connection established' + '\x1B[0m')
   }
 })
 

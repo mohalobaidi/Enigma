@@ -9,19 +9,21 @@ const routes = (get = [], post = [], striction) => {
   [...get, ...post].forEach(({ route, type }) => {
     const name = route.split('/')[0]
     const handler = require(`./handlers/${name}`)
-    if (striction) {
-      router[type](`/api/${route}`, striction, handler)
-    } else {
-      router[type](`/api/${route}`, handler)
-    }
+      router[type](`/api/${route}`, (req, res, next) => {
+        if (global.USER) {
+          req.user = global.USER
+        }
+        if (striction) {
+          return striction(req, res, next)
+        } else {
+          next()
+        }
+      }, handler)
   })
 }
 
 const authenticatedUser = (get, post) => {
   const striction = (req, res, next) => {
-    if (global.USER) { // FOR DEVELOPMENT
-      req.user = global.USER
-    }
     if (req.user) {
       next()
     } else {
@@ -33,9 +35,6 @@ const authenticatedUser = (get, post) => {
 
 const adminUser = (get, post) => {
   const striction = (req, res, next) => {
-    if (global.USER) {
-      req.user = global.USER
-    }
     if (req.user && req.user.type === 0) {
       next()
     } else {
@@ -51,7 +50,7 @@ router.post('/register', require('./handlers/register'))
 
 routes(['user'])
 
-authenticatedUser(['challenges']/* ['challenges','challenge/:id'], ['submit'] */)
+authenticatedUser(['challenges','challenge/:id'], ['submit'])
 
 adminUser(/* [
   'users', 'tokens'

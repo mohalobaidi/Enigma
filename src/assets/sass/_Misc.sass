@@ -1,48 +1,36 @@
+@import '@/../node_modules/toastify-js/src/toastify'
 
 // Misc
 // ––––––––––––––––––––––––––––––––––––––––––––––––––
 
 .toastify
-  padding: 12px 20px
-  color: #ffffff
-  display: inline-block
-  box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.12), 0 10px 36px -4px rgba(77, 96, 232, 0.3)
-  background: -webkit-linear-gradient(315deg, #73a5ff, #5477f5)
-  background: linear-gradient(135deg, #73a5ff, #5477f5)
-  position: fixed
-  opacity: 0
-  transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1)
-  border-radius: 2px
-  cursor: pointer
-  text-decoration: none
-  max-width: calc(50% - 20px)
-  z-index: 2147483647
-  
   margin-top: 4.8rem
   height: 4.8rem !important
   display: flex !important
   align-items: center !important
   padding: 0 1.2rem 0 2.4rem !important
-  margin-bottom: 2.4rem
-  background: rgb(27, 34, 42) !important
-  box-shadow: 0 0 0 transparent !important
-  border: 1px solid rgba(#339af0, .3) !important
-  border-radius: .4rem
+  box-shadow: 0 .2rem .8rem rgba(0, 0, 0, .2) !important
+  background: rgba(mix(#0b7285, $color-background, 20%), .8)
+  border: 1px solid rgba(#0b7285, .5) !important
+  border-radius: 0.6rem
+  user-select: none
+  cursor: inherit
   &.error
-    background: rgb(44, 29, 28) !important
-    border: 1px solid rgba(#ff6b6b, .3) !important
+    background: rgba(mix(#c92a2a, $color-background, 20%), .8)
+    border: 1px solid rgba(#c92a2a, .5) !important
     .toast-close
       color: #ff6b6b
   &.success
-    background: rgb(30, 39, 30) !important
-    border: 1px solid rgba(#51cf66, .3) !important
+    background: rgba(mix(#2b8a3e, $color-background, 20%), .8)
+    border: 1px solid rgba(#2b8a3e, .5) !important
     .toast-close
       color: #51cf66
   .toast-close
-    opacity: 0.4
-    color: #339af0
+    opacity: .8
+    color: #22b8cf
     font-size: 0
     margin-left: 1.2rem
+    cursor: pointer
     &:after
       content: 'close'
       font-size: 1.8rem

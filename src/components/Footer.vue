@@ -6,9 +6,9 @@
       span.red  <3
       | by TechBench — 2019
     .list
-      .item Twitter
-      .item Github
-      .item.special Sign in
+      a.item(href="https://www.twitter.com/tech_bench" target="_blank") Twitter
+      a.item(href="https://github.com/techbench-sa" target="_blank") Github
+      .item.special Join us
 </template>
 
 <script>
@@ -43,6 +43,7 @@ export default {
     .item
       cursor: pointer
       opacity: .7
+      color: #ffffff
       transition: opacity .2s ease-in-out, background .1s ease-in-out
       padding: 4px 12px
       border-radius: 4px

@@ -23,9 +23,10 @@ export default {
 
 <style lang="sass">
 @import '@/assets/sass/main.sass'
+@import '@/assets/sass/_Misc.sass'
 #app
-  height: 100%
+  height: calc(100% - 6.4rem)
   .view
     padding-top: 7.2rem
-    min-height: calc(100% - 6.4rem)
+    min-height: 100%
 </style>

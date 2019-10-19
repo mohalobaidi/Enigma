@@ -8,14 +8,19 @@
     //- TODO: remove placeholder
     .text 10 Students are working on this
     //- TODO: do this
-    .button
+    .button(@click="solveWith('java')")
 </template>
 
 <script>
 
 export default {
   name: 'ChallengeCard',
-  props: ['id', 'name', 'description']
+  props: ['id', 'name', 'description'],
+  methods: {
+    solveWith (lang) {
+      this.$router.history.push(`solve/${lang}/${this.id}`)
+    }
+  }
 }
 
 </script>

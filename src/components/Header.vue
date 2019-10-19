@@ -7,17 +7,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Header',
-  data () {
-    return {
-      // TODO: remove palceholder
-      user: {
-        name: 'Mohammed Alobaidi',
-        score: 512
-      }
-    }
-  }
+  computed: { ...mapGetters(['user']) }
 }
 </script>
 

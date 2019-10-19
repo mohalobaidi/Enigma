@@ -49,17 +49,16 @@ export default {
   deleteChallenge (id) {
     return api.post('/deleteChallenge', { id })
   },
-  submit (id, lang, submission, tests) {
+  submit (id, lang, challenge, submission, tests) {
     return api.post('/submit', { id, lang, submission }).then(res => {
       const { error, results, code } = res.data
       if (code === 0) {
         const payload = results.map(({ type, payload }) => {
           switch (type) {
             case 'test':
-              const { method_name: method, method_type: outputType } = this.challenge
-              const parameters = JSON.parse(this.challenge.parameters)
+              const { method_name: method, method_type: outputType } = challenge
+              const parameters = JSON.parse(challenge.parameters)
               const { test, result, value } = payload
-
               const $ = (type, val) => {
                 const isArray = type.indexOf('Array') !== -1
                 const isString = type.indexOf('String') !== -1

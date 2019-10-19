@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Toastify from 'toastify-js'
-import 'toastify-js/src/toastify.css'
 import api from '@/api'
 
 Vue.use(Vuex)
