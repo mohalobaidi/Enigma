@@ -130,7 +130,6 @@ export default new Vuex.Store({
       } catch {
         context.commit('USER_FAILURE')
       }
-      console.log('test')
       return {}
     },
     changeVisibility: (context, id) => {
@@ -185,7 +184,6 @@ export default new Vuex.Store({
           return res.data
         })
         .catch(err => {
-          console.log(err)
           context.commit('DELETE_CHALLENGE_FAILURE', err)
           return {}
         })

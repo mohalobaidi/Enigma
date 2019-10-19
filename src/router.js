@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '@/store'
 import Home from '@/views/Home.vue'
 
 Vue.use(Router)
@@ -22,17 +23,21 @@ const router = new Router({
         requiresAuth: true
       },
       component: () => import('./views/Solve.vue')
+    }, {
+      path: '/login',
+      name: 'login',
+      component: () => import('./views/Login.vue')
     }
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   const username = store.getters.user.username || ''
-//   if (username === '' && to.matched.some(record => record.meta.requiresAuth)) {
-//     next({ name: 'login' })
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  const username = store.getters.user.username || ''
+  if (username === '' && to.matched.some(record => record.meta.requiresAuth)) {
+    next({ name: 'login' })
+  } else {
+    next()
+  }
+})
 
 export default router

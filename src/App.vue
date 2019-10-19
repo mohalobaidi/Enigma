@@ -1,5 +1,6 @@
 <template lang="pug">
   #app
+    LoadingScreen(:hidden="!loading")
     Navbar
     transition(name="fade")
       router-view.view(:key="$route.fullPath")
@@ -10,8 +11,14 @@
 
 export default {
   name: 'app',
+  data () {
+    return {
+      loading: true
+    }
+  },
   mounted () {
     this.$store.dispatch('fetchUser').then(res => {
+      this.loading = false
       const meta = this.$router.history.meta
       if ((meta && meta.requiresAuth) || res.id) {
         this.$router.history.push(`/`)

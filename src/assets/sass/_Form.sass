@@ -17,9 +17,15 @@ select
 	font-size: 1.6rem
 	font-weight: 400
 	color: #fff
-	background-color: rgba(63, 63, 63, 0.4)
+	-webkit-text-fill-color: #fff 
+	border-color: rgba(#ffffff, .2) !important
+	box-shadow: 0 0 0 4.8rem rgba(#ffffff, .04) inset, 0 0 0 4.8rem $color-background inset !important
 	cursor: pointer
-
+	&:focus
+		border-color: rgba(#ffffff, 0.3)
+	&:-webkit-autofill
+		box-shadow: 0 0 0 4.8rem rgba(#66d9e8, .04) inset, 0 0 0 4.8rem $color-background inset !important
+		border: 1px solid mix(#66d9e8, $color-background, 50%) !important
 select
 	height: 4.8rem
   padding: 0 2.4rem

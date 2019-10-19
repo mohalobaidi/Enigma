@@ -1,7 +1,7 @@
-const { authenticate } = require('../passport')
+const passport = require('../passport')
 
 module.exports = (req, res, next) => {
-  authenticate('local', (err, user, info) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) {
       return next(err)
     }

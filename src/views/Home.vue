@@ -3,6 +3,9 @@
 #Home
   .container
     Header
+    Pane(title="All Challenges" v-if="!this.challenges.length")
+      Grid(:cols="4")
+        ChallengeCardPlaceholder( v-for="(_, i) in new Array(8)" :key="i")
     Pane(title="Continue Solving" v-if="inProgressChallenges.length")
       Grid(:cols="4")
         ChallengeCard( v-for="(challenge, i) in inProgressChallenges" :key="i" v-bind="challenge")

@@ -47,6 +47,7 @@ const adminUser = (get, post) => {
 router.post('/login', require('./handlers/login'))
 router.post('/login', require('./handlers/logout'))
 router.post('/register', require('./handlers/register'))
+router.get('/logout', require('./handlers/logout'))
 
 routes(['user'])
 

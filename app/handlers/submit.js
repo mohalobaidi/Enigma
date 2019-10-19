@@ -43,8 +43,8 @@ module.exports = (req, res, next) => {
           generateSubmission(lang, challenge, submission)
         )
       } catch (err) {
-        console.error('\x1B[0;31m[err] Couldn\'t write a submission file "./handlers/submit.js:46"\x1B[0m')
-        console.log(err)
+        console.error('\x1B[0;31m[ERR] Couldn\'t write a submission file "./handlers/submit.js:46"\x1B[0m')
+        console.log('[ERR] ', err)
         res.json({ error: 'Unexpected Error...', code: 1 })
       }
 
@@ -53,7 +53,7 @@ module.exports = (req, res, next) => {
         submissionFileDirectory
       ).catch(err => {
         console.error('\x1B[0;31m[ERR] Couldn\'t compile a submission "./handlers/submit.js:55"\x1B[0m')
-        console.log(err)
+        console.log('[ERR] ', err)
       })
       const trimmedResponse = (r => r.slice(r.indexOf('{'), r.lastIndexOf('}') + 1) || '{}')(response).trim()
       if (code === 0) {
@@ -64,7 +64,7 @@ module.exports = (req, res, next) => {
           )
         } catch (e) {
           console.error('\x1B[0;31m[ERR] Couldn\'t parse submission results "./handlers/submit.js:65"\x1B[0m')
-          console.log(trimmedResponse)
+          console.log('[ERR] ', trimmedResponse)
           res.json({ error: 'Unexpected Error...###ERROR###' + e + '\n\n' + trimmedResponse, code: 1 })
         }
         const score = results.filter(result => result.payload.value).length

@@ -56,7 +56,7 @@ export default {
     ...mapGetters(['challenges']),
     challenge () {
       const challenge = this.challenges.find(c => c.id === +this.$route.params.id)
-      return challenge || {description: ''}
+      return challenge || { description: '' }
     },
     tests () {
       return this.challenge.tests ? JSON.parse(this.challenge.tests) : []

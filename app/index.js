@@ -4,6 +4,7 @@ const session = require('express-session')
 const history = require('connect-history-api-fallback')
 const logger = require('morgan')
 const cors = require('cors')
+const passport = require('./passport')
 const Routes = require('./routes')
 
 const app = express()
@@ -17,7 +18,6 @@ if (process.argv[2] === 'dev') {
   global.USER = { id: +id || 1, type: type | 0 }
   console.log('[DEV] logged in with id ' + global.USER.id)
 }
-global.USER = { id: 1, type: 0 }
 
 // Parse res.body to JSON.
 app.use(bodyParser.json())
@@ -44,12 +44,11 @@ app.use(
   })
 )
 
-// TODO: ADD DATABASE
-// // Initialize Passport (authentication middleware).
-// app.use(passport.initialize())
+// Initialize Passport (authentication middleware).
+app.use(passport.initialize())
 
-// // Remove user session id with USER object - that includes all user's info.
-// app.use(passport.session())
+// Remove user session id with USER object - that includes all user's info.
+app.use(passport.session())
 
 // Ignore CORS
 app.use(cors())

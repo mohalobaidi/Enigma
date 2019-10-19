@@ -2,8 +2,7 @@ import axios from 'axios'
 
 // TODO: CHECK YOUR CODE
 const api = axios.create({
-  // baseURL: 'http://localhost:3000/api',
-  baseURL: '/api',
+  baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/api' : '/api',
   headers: {
     'Content-Type': 'application/json'
   }
