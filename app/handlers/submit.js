@@ -55,7 +55,7 @@ module.exports = (req, res, next) => {
         console.error('\x1B[0;31m[ERR] Couldn\'t compile a submission "./handlers/submit.js:55"\x1B[0m')
         console.log(err)
       })
-      const trimmedResponse = (a => a.slice(a.indexOf('{'), a.lastIndexOf('}') + 1) || '{}')(response).trim()
+      const trimmedResponse = (r => r.slice(r.indexOf('{'), r.lastIndexOf('}') + 1) || '{}')(response).trim()
       if (code === 0) {
         let results
         try {
