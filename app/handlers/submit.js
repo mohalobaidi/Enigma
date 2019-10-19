@@ -55,16 +55,17 @@ module.exports = (req, res, next) => {
         console.error('\x1B[0;31m[ERR] Couldn\'t compile a submission "./handlers/submit.js:55"\x1B[0m')
         console.log(err)
       })
+      const trimmedResponse = (a => a.slice(a.indexOf('{'), a.lastIndexOf('}') + 1) || '{}')(response).trim()
       if (code === 0) {
         let results
         try {
           results = JSON.parse(
-            '[' + `${response}`.trim().replace(/\n/g, ',') + ']'
+            '[' + `${trimmedResponse}`.replace(/\n/g, ',') + ']'
           )
         } catch (e) {
           console.error('\x1B[0;31m[ERR] Couldn\'t parse submission results "./handlers/submit.js:65"\x1B[0m')
-          console.log(response)
-          res.json({ error: 'Unexpected Error...###ERROR###' + e + '\n\n' + response, code: 1 })
+          console.log(trimmedResponse)
+          res.json({ error: 'Unexpected Error...###ERROR###' + e + '\n\n' + trimmedResponse, code: 1 })
         }
         const score = results.filter(result => result.payload.value).length
         await database.addSubmission({
