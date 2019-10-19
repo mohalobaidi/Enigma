@@ -97,8 +97,13 @@ export default {
             this.results = payload
             break
           case 1:
-            this.error = payload
-            console.warn('Error: Please print a presentable message here!')
+            const error = payload.split('###ERROR###')
+            this.error = error[0]
+            if (error[1]) {
+              console.error(error[1])
+            } else {
+              console.warn('Error: Please print a presentable message here!')
+            }
         }
       }).catch(err => {
         this.checking = false

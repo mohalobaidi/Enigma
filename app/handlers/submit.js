@@ -64,7 +64,7 @@ module.exports = (req, res, next) => {
         } catch (e) {
           console.error('\x1B[0;31m[ERR] Couldn\'t parse submission results "./handlers/submit.js:65"\x1B[0m')
           console.log(response)
-          res.json({ error: 'Unexpected Error...', code: 1 })
+          res.json({ error: 'Unexpected Error...###ERROR###' + e, code: 1 })
         }
         const score = results.filter(result => result.payload.value).length
         await database.addSubmission({
@@ -77,7 +77,6 @@ module.exports = (req, res, next) => {
         })
         res.json({ results, code })
       } else if (code === 1) {
-
         res.json({ error: response.replace(/\/.*\//g, ''), code })
       }
     }
