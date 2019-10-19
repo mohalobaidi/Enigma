@@ -52,12 +52,12 @@ const process = async (command, args) => {
   return new Promise((resolve, reject) => {
     let response = []
 
-    ls.stdout.on('data', d => (response += d))
-
-    ls.stderr.on('data', d => (response += d))
-
     ls.on('close', code => {
       resolve({ response, code })
     })
+
+    ls.stdout.on('data', d => (response += d))
+
+    ls.stderr.on('data', d => (response += d))
   })
 }
