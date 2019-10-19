@@ -3,18 +3,19 @@
 #Home
   .container
     Header
-    Pane(title="All Challenges" v-if="!this.challenges.length")
-      Grid(:cols="4")
-        ChallengeCardPlaceholder( v-for="(_, i) in new Array(8)" :key="i")
-    Pane(title="Continue Solving" v-if="inProgressChallenges.length")
-      Grid(:cols="4")
-        ChallengeCard( v-for="(challenge, i) in inProgressChallenges" :key="i" v-bind="challenge")
-    Pane(title="All Challenges" v-if="newChallenges.length")
-      Grid(:cols="4")
-        ChallengeCard( v-for="(challenge, i) in newChallenges" :key="i" v-bind="challenge")
-    Pane(title="Solved Challenges" v-if="solvedChallenges.length")
-      Grid(:cols="4")
-        ChallengeCard( v-for="(challenge, i) in solvedChallenges" :key="i" v-bind="challenge")
+    transition-group(name="fade")
+      Pane(title="All Challenges" v-if="!this.challenges.length" :key="0")
+        Grid(:cols="4")
+          ChallengeCardPlaceholder( v-for="(_, i) in new Array(8)" :key="i")
+      Pane(title="Continue Solving" v-if="inProgressChallenges.length" :key="1")
+        Grid(:cols="4")
+          ChallengeCard( v-for="(challenge, i) in inProgressChallenges" :key="i" v-bind="challenge")
+      Pane(title="All Challenges" v-if="newChallenges.length" :key="2")
+        Grid(:cols="4")
+          ChallengeCard( v-for="(challenge, i) in newChallenges" :key="i" v-bind="challenge")
+      Pane(title="Solved Challenges" v-if="solvedChallenges.length" :key="3")
+        Grid(:cols="4")
+          ChallengeCard( v-for="(challenge, i) in solvedChallenges" :key="i" v-bind="challenge")
 </template>
 
 <script>

@@ -27,6 +27,7 @@ export default {
   align-items: center
   justify-content: center
   flex-direction: column
+  user-select: none
   transition: opacity .2s ease-in-out, z-index 0s
   &.hidden
     opacity: 0

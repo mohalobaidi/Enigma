@@ -53,7 +53,6 @@ export default {
       animation: placeHolderShimmer 1.5s linear infinite
     .title
       margin: 1.2rem 0
-      font-size: 
       height: 1.0rem
       width: 12.8rem
       border-radius: .6rem
@@ -67,7 +66,6 @@ export default {
       color: rgba(#ffffff, .7)
       .line
         margin: 1.2rem 0
-        font-size: 
         height: .6rem
         border-radius: .4rem
         font-weight: 400
