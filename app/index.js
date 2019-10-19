@@ -9,14 +9,15 @@ const Routes = require('./routes')
 const app = express()
 
 // FOR DEVELOPMENT
-// if (process.argv[2] === 'dev') {
+if (process.argv[2] === 'dev') {
   // Logger middleware.
   app.use(logger('dev'))
 
   const [,,, id, type] = process.argv[2]
   global.USER = { id: +id || 1, type: type | 0 }
   console.log('[DEV] logged in with id ' + global.USER.id)
-// }
+}
+global.USER = { id: 1, type: 0 }
 
 // Parse res.body to JSON.
 app.use(bodyParser.json())

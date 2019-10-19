@@ -2,7 +2,11 @@ const pg = require('pg')
 const queries = require('./queries.json')
 
 const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
+  host: 'ec2-54-247-171-30.eu-west-1.compute.amazonaws.com',
+  database: 'd3luk71mvo4o5h',
+  user: 'akdlyvoqkyajxa',
+  port: 5432,
+  password: '5d9becda04cad4b37e47ae6e60a9b21be32219c99575db474dffda141f243b24',
   ssl: true
 })
 
