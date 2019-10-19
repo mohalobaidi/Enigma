@@ -27,8 +27,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // Provides a fallback for non-existing directories - except "/logout".
 app.use(history({
-  rewrites: [{ from: '/logout$', to: '/logout' }]
+  rewrites: [{ from: '/logout$', to: '/logout' }, { from: '/loaderio-f3849b2e02177bdc6dc21b1e4f5724f5', to: '/loaderio-f3849b2e02177bdc6dc21b1e4f5724f5' }]
 }))
+
+app.use('/loaderio-f3849b2e02177bdc6dc21b1e4f5724f5', (req, res) => res.send('loaderio-f3849b2e02177bdc6dc21b1e4f5724f5'))
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
 
 // Serve the Vue app and all static files within it.
 app.use('/', express.static('./dist'))
