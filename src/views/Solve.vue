@@ -102,6 +102,10 @@ export default {
             if (error[1]) {
               console.error(error[1])
             } else {
+              const i = this.error.indexOf('Error: ')
+              if (i !== -1) {
+                this.error = this.error.slice(i)
+              }
               console.warn('Error: Please print a presentable message here!')
             }
         }
