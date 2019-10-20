@@ -1,6 +1,9 @@
 <!-- markdownlint-disable MD001 MD014 -->
 
 # Enigma (Programming Competition System)
+[![Dependency Status](https://david-dm.org/mohalobaidi/Enigma.svg)](https://david-dm.org/mohalobaidi/Enigma)
+[![devDependency Status](https://david-dm.org/mohalobaidi/Enigma/dev-status.svg)](https://david-dm.org/mohalobaidi/Enigma#info=devDependencies)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 **Enigma** is an automated system to upload, compile and judge players submissions of programming problems. Currently, it's supporting Java and Python for solving problems.
 
